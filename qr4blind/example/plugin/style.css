@@ -1,0 +1,9 @@
+.qr4blindQR-style
+{
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    opacity: .6;
+    width: 200px;
+    height: 200px;
+}

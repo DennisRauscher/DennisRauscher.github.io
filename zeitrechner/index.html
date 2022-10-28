@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="de" ng-app="zeitrechnerApp">
+  <head>
+    <title>Zeitrechner</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="css/bootstrap-grid.min.css"/>
+    <link rel="stylesheet" href="css/bootstrap-reboot.min.css"/>
+    <link rel="stylesheet" href="css/main.css"/>
+
+    <script src="js/jquery-3.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
+    <script src="js/main.js"></script>
+  </head>
+  <body ng-controller="RechnerController">
+    <div class="payWall">
+      <div class="wrapper">
+        <p>Bitte anmelden:</p>
+        <input id="val_name" class="verifyInput" type="text" placeholder="name"/>
+        <input id="val_passwd" class="verifyInput" type="text" placeholder="passwort"/>
+        <input class="verifyInput" type="button" value="Anmelden" onmousedown="anmelden()"/>
+      </div>
+    </div>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="headline col-sm-12">
+          <li><b>Zeitrechner</b></li>
+        </div>
+      </div>
+      <div class="timepart form-group row" ng-repeat="timepart in timeparts"d>
+        <div class="closeBtn" ng-click="del($index)">
+          X
+        </div>
+
+        <div class="title col-12">
+          <li>Teil {{$index + 1}}</li>
+        </div>
+        <label for="example-text-input" class="col-2 col-form-label">Von:</label>
+        <div class="col-10 form-input">
+          <input class="form-control Time1_{{$index}}" type="time" value="{{timepart.von}}" ng-model="timepart.von">
+        </div>
+        <label for="example-text-input" class="col-2 col-form-label">Bis:</label>
+        <div class="col-10 form-input">
+          <input class="form-control Time2_{{$index}}" type="time" value="{{timepart.bis}}" ng-model="timepart.bis">
+        </div>
+        <label for="example-text-input" class="col-6 col-form-label">Pause/Störungen etc.:</label>
+        <div class="col-6 form-input">
+          <input class="form-control Time3_{{$index}}" type="time" value="{{timepart.breaks}}" ng-model="timepart.breaks">
+        </div>
+        <label for="example-text-input" class="col-6 col-form-label">Ergebniss {{$index + 1}}:</label>
+        <div class="col-6 form-input">
+          <input class="form-control" type="text" value="{{calc($index)}}" ng-model="calc($index)" disabled>
+        </div>
+        =
+        <div class="col-4 form-input">
+          <input class="form-control" type="text" value="{{calcMin($index)}} min" disabled>
+        </div>
+      </div>
+      <div class="row">
+        <div class="addBtn col-12" ng-click="createNew()">
+          + Teil hinzufügen
+        </div>
+
+        <div class="result col-12">
+          <li><b><u ng-bind="resultTot()"></u></b> insgesammt</li>
+        </div>
+
+        <label for="example-text-input" class="col-12 col-form-label">Ziel Stückzahl/Minute:</label>
+        <div class="col-10 form-input">
+          <input class="form-control" type="text" value="{{quotePerMinte}}" ng-model="quotePerMinte">
+        </div>
+        <label for="example-text-input" class="col-12 col-form-label">Geschafft:</label>
+        <div class="col-10 form-input">
+          <input class="form-control" type="text" value="{{totalDone}}" ng-model="totalDone">
+        </div>
+        <div class="result col-12">
+          <li><b><u ng-bind="resultQuote()"></u></b> %</li>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
